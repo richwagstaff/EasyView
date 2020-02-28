@@ -1,48 +1,70 @@
 import Foundation
 import UIKit
 
-class EasyView: UIView {
-    
-    var addViews: [UIView] = []
-    
-    init() {
+open class EasyView: UIView {
+        
+    public init() {
         super.init(frame: CGRect.zero)
         sharedInit()
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         sharedInit()
     }
     
-    func sharedInit() {
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        align()
+    }
+    
+    open func sharedInit() {
         addSubviews()
-        configureUI()
+        setupConstraints()
+        setupUI()
     }
     
     /**
-     Override this to add subviews manually. Otherwise override addViews variable to add them automatically
+     Override this to add subviews manually. Otherwise override subviewsToAdd variable to add them automatically
      */
-    func addSubviews() {
-        for view in addViews {
+    open func addSubviews() {
+        for view in subviewsToAdd() {
             addSubview(view)
         }
     }
     
+    
     /**
-     Override this and setup the ui
+     Override this with a list of the subviews to add to the view
      */
-    func configureUI() {
+    open func subviewsToAdd() -> [UIView] {
+        return []
+    }
+    
+    
+    /**
+     Override this to setup the constraints for the views
+     */
+    open func setupConstraints() {
+        
+    }
+    
+    /**
+     Override this and setup the elements for the user interface
+     */
+    open func setupUI() {
         
     }
 
-    ///
-    func align() {
+    /**
+     Override this to size and position the views
+     */
+    open func align() {
         
     }
     
